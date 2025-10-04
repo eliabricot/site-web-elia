@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Eliabricot</title>
 
   <style>
@@ -24,36 +24,55 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html, body{height:100%}
 
+    /* ===== BACKGROUND (robuste iOS/Android) ===== */
     body{
       font-family:"Philo", ui-sans-serif, system-ui;
       font-size:17px; line-height:1.6; color:var(--text);
-      /* FOND pleine page */
+      background-color:#0a0f12; /* évite le flash blanc */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x:hidden;
+      padding-left: env(safe-area-inset-left); 
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* On remplace background-attachment:fixed (bug iOS) par un calque fixe */
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
       background-image:
         linear-gradient(180deg, rgba(10,15,18,.45) 0%, rgba(10,15,18,.65) 100%),
         url("assets/cover.jpg?v=2");
       background-size: cover, cover;
       background-position: center, center;
       background-repeat: no-repeat, no-repeat;
-      background-attachment: fixed, fixed;
-
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x:hidden;
+      will-change: transform;
+      transform: translateZ(0); /* évite artefacts sur mobiles */
     }
 
-    @supports (-webkit-touch-callout: none){
-      body{ background-attachment: scroll; }
+    /* Option: cadrage un peu plus haut en mode portrait pour les téléphones */
+    @media (max-width: 700px) and (orientation: portrait){
+      body::before{ background-position: center 25%, center 25%; }
     }
 
     .wrap{max-width:780px;margin:0 auto;padding:20px}
 
     /* ===== HEADER ===== */
     header{
+      /* Fallback */
       min-height:100vh;
+      /* Viewport modernes qui gèrent la barre d'adresse mobile */
+      min-height:100dvh;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
+    }
+
+    /* iOS old WebKit: tente de remplir l'écran */
+    @supports (-webkit-touch-callout: none){
+      header{ min-height:-webkit-fill-available; }
     }
 
     .hero h1{
@@ -92,6 +111,7 @@
       background:rgba(16,19,26,.72);
       border:1px solid #ffffff1a;
       transition:.2s;
+      -webkit-tap-highlight-color: transparent;
     }
     .link:hover{background:#1a2b2b;border-color:#ffffff30}
     .link img.icon{width:22px;height:22px;object-fit:contain;display:inline-block}
@@ -108,6 +128,7 @@
       color:#fff;background:#2e2e3a;border:none;border-radius:8px;cursor:pointer;
       transition:transform .15s ease, background .2s ease;
       box-shadow:0 2px 6px rgba(0,0,0,.3);
+      -webkit-tap-highlight-color: transparent;
     }
     .uid-copy:hover{background:#456d6d;transform:scale(1.04)}
 
@@ -138,48 +159,46 @@
     .np a:hover{text-decoration:underline}
 
     /* ===== Twitch Status ===== */
-.twitch-status {
-  text-align: center;
-  padding: 16px;
-  background: linear-gradient(145deg, #1a2028cc, #11151ccc);
-  border: 1px solid #ffffff15;
-  border-radius: var(--radius);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 8px #00000050 inset;
-  margin-top: 1.5rem;
-  transition: all 0.3s ease;
-}
+    .twitch-status {
+      text-align: center;
+      padding: 16px;
+      background: linear-gradient(145deg, #1a2028cc, #11151ccc);
+      border: 1px solid #ffffff15;
+      border-radius: var(--radius);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 8px #00000050 inset;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+    }
 
-.twitch-status.live {
-  background: linear-gradient(145deg, rgba(135, 97, 255, 0.25), rgba(100, 75, 200, 0.3));
-  box-shadow: 0 0 12px rgba(140, 100, 255, 0.25), 0 0 25px rgba(180, 140, 255, 0.15) inset;
-  border: 1px solid rgba(200, 160, 255, 0.2);
-}
+    .twitch-status.live {
+      background: linear-gradient(145deg, rgba(135, 97, 255, 0.25), rgba(100, 75, 200, 0.3));
+      box-shadow: 0 0 12px rgba(140, 100, 255, 0.25), 0 0 25px rgba(180, 140, 255, 0.15) inset;
+      border: 1px solid rgba(200, 160, 255, 0.2);
+    }
 
-.twitch-status h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
+    .twitch-status h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
-.twitch-status a {
-  color: #c8a8ff;
-  text-decoration: none;
-  font-weight: 600;
-}
+    .twitch-status a {
+      color: #c8a8ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
 
-.twitch-status a:hover {
-  text-decoration: underline;
-}
+    .twitch-status a:hover { text-decoration: underline; }
 
     /* ===== Responsive ===== */
     @media (max-width:600px){
-      .hero h1{font-size:30px}
-      .hero p{font-size:14px}
-      .wrap{padding:12px}
+      .hero h1{font-size:34px}
+      .hero p{font-size:15px}
+      .wrap{padding:14px}
     }
   </style>
 </head>
@@ -194,17 +213,12 @@
   <main class="wrap">
     <!-- Bio -->
     <section class="card">
-      <h2>Bio</h2>
-      <p>
-        Hey, moi c’est Elia. J'ai 19 ans et je suis dans un univers doux et nocturne ✧
-        Je stream, je crée, et j'entreprends des projets avec la communauté. Bienvenue dans mon petit coin d’internet.
-        Je joue à énormément de jeux différents comme : Omori, Hollow Knight, Pokémon, Persona et j'en passe !
-        Je suis étudiante en LLCER Japonais et aussi violoniste 🎻 Ma musique préférée est Insomnia de Eve.
-        Je débute le cosplay aussi ! ✧
-      </p>
-      <br>
-      <p>🍡 Joueur Mario Kart World sous le tag ??.</p>
-      <p>🌀 Lead & owner de la communauté <i>Sonic Racing Crossworld France</i>.</p>
+ 	<h2>Bio</h2>
+ 	<p>Hey, moi c’est Elia. J'ai 19 ans et je suis dans un univers doux et nocturne ✧</p>
+ 	<p>Je stream, je crée, et j'entreprends des projets avec la communauté.</p>
+ 	<p>Je joue à énormément de jeux différents : Omori, Hollow Knight, Pokémon, Persona…</p>
+ 	<p>Je suis étudiante en LLCER Japonais et violoniste 🎻 Ma musique préférée est Insomnia de Eve.</p>
+ 	<p>Je débute le cosplay aussi ! ✧</p>
     </section>
 
     <!-- Genshin -->
@@ -345,4 +359,3 @@
   </script>
 </body>
 </html>
-
