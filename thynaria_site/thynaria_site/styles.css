@@ -1,0 +1,44 @@
+/* Thynaria Base Theme */
+:root{
+  --bg:#0c0d10; --card:#14161b; --text:#e9edf6; --muted:#aab3c5;
+  --accent:#b6c7ff; --accent-2:#9ad0ff; --ring:#ffffff22; --shadow:0 10px 30px #0006;
+  --radius:16px; --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Hiragino Kaku Gothic ProN,Yu Gothic,Segoe UI Emoji,Apple Color Emoji;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:radial-gradient(1200px 600px at 70% -20%,#20304055,transparent 70%),var(--bg);line-height:1.6}
+.site-header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;backdrop-filter:blur(10px);background:linear-gradient(180deg,#0c0d10cc,#0c0d10aa);border-bottom:1px solid #ffffff10}
+.brand{display:flex;gap:.5rem;align-items:center;text-decoration:none;color:var(--text);font-weight:700}
+.brand-mark{filter:drop-shadow(0 2px 6px #0008)}
+.brand-text{text-transform:lowercase;letter-spacing:.08em}
+.nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.2rem}
+.site-nav{display:flex;gap:1rem}
+.site-nav a{color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:10px}
+.site-nav a:hover{color:var(--text);background:#ffffff10}
+@media (max-width:800px){.nav-toggle{display:block}.site-nav{position:absolute;right:1rem;top:56px;background:#0c0d10f0;padding:.5rem;border:1px solid #ffffff12;border-radius:12px;display:none;flex-direction:column}.site-nav.open{display:flex}}
+.hero{min-height:62vh;display:grid;place-items:center;background-image:url('assets/cover.jpg');background-size:cover;background-position:center;border-bottom:1px solid #ffffff12}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0c0d10aa,#0c0d10 40%)}
+.hero-inner{position:relative;padding:5rem 1rem;text-align:center;max-width:900px}
+.overline{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-size:.85rem}
+.hero h1{font-weight:800;font-size:clamp(2rem,5vw,3.5rem);margin:.4rem 0}
+.tagline{color:var(--muted);margin-bottom:1rem}
+.cta-row{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap}
+main{padding:2rem 1rem 5rem;max-width:1000px;margin:0 auto}
+.panel{margin:3rem 0}
+h2{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 1rem}
+h3{margin:0 0 .5rem}
+.btn{display:inline-block;padding:.7rem 1rem;border-radius:12px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0a0f14;text-decoration:none;font-weight:700;border:1px solid #ffffff40;box-shadow:var(--shadow)}
+.btn.ghost{background:#ffffff10;color:var(--text);border-color:#ffffff30}.btn.small{padding:.45rem .7rem;font-size:.9rem}
+.badge{font-size:.75rem;padding:.15rem .4rem;background:#ffffff14;border:1px solid #ffffff22;border-radius:999px;margin-left:.3rem}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.card{background:linear-gradient(180deg,#12141a,#0e1015);border:1px solid #ffffff12;border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+.chips{display:flex;gap:.5rem;list-style:none;padding:0;margin:.75rem 0 0}
+.chips li{font-size:.85rem;color:var(--muted);border:1px solid #ffffff18;padding:.25rem .55rem;border-radius:999px}
+.links{list-style:none;padding:0;display:grid;gap:.5rem}
+.links a{display:block;padding:.8rem 1rem;border-radius:10px;border:1px solid #ffffff18;text-decoration:none;color:var(--text);background:#0f1218}
+.links a:hover{background:#111520;border-color:#ffffff28}
+.mono{font-family:var(--mono)}.uid{font-size:1.2rem}
+.site-footer{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem;border-top:1px solid #ffffff12;color:var(--muted)}
+.to-top{color:var(--muted);text-decoration:none;border:1px solid #ffffff18;padding:.25rem .55rem;border-radius:8px}
+.fine{color:var(--muted);font-size:.95rem;margin-top:.6rem}
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
