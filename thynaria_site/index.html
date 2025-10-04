@@ -137,6 +137,30 @@
     .np a{color:#b6e0ff;text-decoration:none}
     .np a:hover{text-decoration:underline}
 
+    /* ===== Twitch Status ===== */
+    .twitch-status{
+      background: rgba(255,255,255,.05);
+      border-radius:12px;
+      padding:16px;
+      margin-top:24px;
+      text-align:center;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 15px rgba(180,140,255,.12);
+      transition: .3s;
+    }
+    .twitch-status.live{
+      background: rgba(180,140,255,.10);
+      box-shadow: 0 0 20px rgba(180,140,255,.28);
+    }
+    .tw-link{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;text-decoration:none}
+    .tw-thumb{width:180px;height:100px;object-fit:cover;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:transform .25s}
+    .tw-link:hover .tw-thumb{transform:scale(1.03)}
+    .tw-info{text-align:left;max-width:260px}
+    .tw-title{font-weight:600}
+    .tw-sub{opacity:.85;color:#cbaaff}
+    .twitch-status a{color:#c8a8ff;text-decoration:none}
+    .twitch-status a:hover{text-decoration:underline}
+
     /* ===== Responsive ===== */
     @media (max-width:600px){
       .hero h1{font-size:30px}
@@ -188,6 +212,12 @@
       <div id="np-content"><p style="opacity:.7">rien en écoute pour le moment…</p></div>
     </section>
 
+    <!-- Twitch -->
+    <section class="card twitch-status" id="tw">
+      <h2>🔴 Twitch</h2>
+      <div id="twitch-box"><p style="opacity:.7">vérification du live…</p></div>
+    </section>
+
     <!-- Liens -->
     <section class="card">
       <h2>Liens</h2>
@@ -227,6 +257,7 @@
       });
     }
 
+    /* Now Playing via Lanyard (Discord -> Spotify) */
     const DISCORD_ID = "554436717260832770";
 
     async function updateNowPlaying(){
@@ -261,6 +292,42 @@
     }
     updateNowPlaying();
     setInterval(updateNowPlaying, 15000);
+
+    /* ===== Twitch (via /api/twitch) ===== */
+    const TWITCH_USER = "eliabricot_"; // ton pseudo exact
+
+    async function updateTwitch(){
+      try{
+        const r = await fetch(`/api/twitch?user=${encodeURIComponent(TWITCH_USER)}`);
+        const data = await r.json();
+        const box = document.getElementById('twitch-box');
+        const container = document.getElementById('tw');
+
+        if (data.live){
+          const thumb = (data.thumbnail_url || "")
+            .replace("{width}","320").replace("{height}","180");
+          container.classList.add('live');
+          box.innerHTML = `
+            <a class="tw-link" href="${data.url}" target="_blank" rel="noopener">
+              <img class="tw-thumb" src="${thumb}" alt="aperçu du live">
+              <div class="tw-info">
+                <div class="tw-title">🎥 ${data.title}</div>
+                <div class="tw-sub">en direct sur Twitch</div>
+              </div>
+            </a>
+          `;
+        } else {
+          container.classList.remove('live');
+          box.innerHTML = `<p style="opacity:.78">☁️ pas de stream pour l’instant… un peu de calme et de musique entre les étoiles ✧</p>`;
+        }
+      }catch(e){
+        console.error(e);
+        document.getElementById('twitch-box').innerHTML =
+          `<p style="opacity:.7">impossible de vérifier le live pour le moment…</p>`;
+      }
+    }
+    updateTwitch();
+    setInterval(updateTwitch, 60000);
   </script>
 </body>
 </html>
