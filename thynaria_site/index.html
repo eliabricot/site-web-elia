@@ -138,28 +138,42 @@
     .np a:hover{text-decoration:underline}
 
     /* ===== Twitch Status ===== */
-    .twitch-status{
-      background: rgba(255,255,255,.05);
-      border-radius:12px;
-      padding:16px;
-      margin-top:24px;
-      text-align:center;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 15px rgba(180,140,255,.12);
-      transition: .3s;
-    }
-    .twitch-status.live{
-      background: rgba(180,140,255,.10);
-      box-shadow: 0 0 20px rgba(180,140,255,.28);
-    }
-    .tw-link{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;text-decoration:none}
-    .tw-thumb{width:180px;height:100px;object-fit:cover;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:transform .25s}
-    .tw-link:hover .tw-thumb{transform:scale(1.03)}
-    .tw-info{text-align:left;max-width:260px}
-    .tw-title{font-weight:600}
-    .tw-sub{opacity:.85;color:#cbaaff}
-    .twitch-status a{color:#c8a8ff;text-decoration:none}
-    .twitch-status a:hover{text-decoration:underline}
+.twitch-status {
+  text-align: center;
+  padding: 16px;
+  background: linear-gradient(145deg, #1a2028cc, #11151ccc);
+  border: 1px solid #ffffff15;
+  border-radius: var(--radius);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 8px #00000050 inset;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.twitch-status.live {
+  background: linear-gradient(145deg, rgba(135, 97, 255, 0.25), rgba(100, 75, 200, 0.3));
+  box-shadow: 0 0 12px rgba(140, 100, 255, 0.25), 0 0 25px rgba(180, 140, 255, 0.15) inset;
+  border: 1px solid rgba(200, 160, 255, 0.2);
+}
+
+.twitch-status h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.twitch-status a {
+  color: #c8a8ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.twitch-status a:hover {
+  text-decoration: underline;
+}
 
     /* ===== Responsive ===== */
     @media (max-width:600px){
@@ -189,7 +203,7 @@
         Je débute le cosplay aussi ! ✧
       </p>
       <br>
-      <p>🎮 Joueur Mario Kart World sous le tag ??.</p>
+      <p>🍡 Joueur Mario Kart World sous le tag ??.</p>
       <p>🌀 Lead & owner de la communauté <i>Sonic Racing Crossworld France</i>.</p>
     </section>
 
@@ -201,7 +215,7 @@
         <button class="uid-copy" onclick="copyUID('714540470')">copier</button>
       </div>
       <div class="uid-row">
-        <span class="uid-label">🌸 UID Asia : 850533478</span>
+        <span class="uid-label">🪷 UID Asia : 850533478</span>
         <button class="uid-copy" onclick="copyUID('850533478')">copier</button>
       </div>
     </section>
@@ -214,7 +228,7 @@
 
     <!-- Twitch -->
     <section class="card twitch-status" id="tw">
-      <h2>🔴 Twitch</h2>
+      <h2>🏮 Twitch</h2>
       <div id="twitch-box"><p style="opacity:.7">vérification du live…</p></div>
     </section>
 
