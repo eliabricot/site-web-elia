@@ -349,34 +349,53 @@
 
     /* ===== Musique du jour (API /api/spotify-daily) ===== */
     const PLAYLIST_ID = "4QT911TLoITPYZX3Ja72SO";
-    async function renderDaySong(){
-      try{
-        // renvoie 1 morceau/jour directement
-        const r = await fetch(`/api/spotify-daily?single=1&playlist=${encodeURIComponent(PLAYLIST_ID)}`);
-        const s = await r.json(); // {title,artist,url,cover,preview_url}
-        const box = document.getElementById('day-song-box');
+    <script>
+  // ...garde tout ton code au-dessus...
 
-        if (s && s.title){
-          box.innerHTML = `
-            <div style="display:flex;align-items:center;gap:12px">
-              ${s.cover ? `<img src="${s.cover}" alt="" style="width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid #ffffff20">` : `<div style="width:44px;height:44px;border-radius:8px;background:#1b1f2a"></div>`}
-              <div>
-                <div style="font-weight:600">${s.title}</div>
-                <div style="opacity:.8">${s.artist||""}</div>
-                ${s.url ? `<div style="margin-top:4px"><a href="${s.url}" target="_blank" rel="noopener" style="color:#b6e0ff">écouter ↗</a></div>` : ``}
-              </div>
-            </div>`;
-          return s;
-        }else{
-          box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
-          return null;
-        }
-      }catch(e){
-        console.error(e);
-        document.getElementById('day-song-box').innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
-        return null;
+  const PLAYLIST_ID = "4QT911TLoITPYZX3Ja72SO";
+
+  async function renderDaySong(){
+    const box = document.getElementById('day-song-box');
+    box.innerHTML = `<p style="opacity:.7">chargement…</p>`;
+    const pickFromArray = (arr) => {
+      const idx = dayOfYear(new Date()) % Math.max(arr.length, 1);
+      return arr[idx] || null;
+    };
+
+    try {
+      // 1) on tente la route "single"
+      let r = await fetch(`/api/spotify-daily?single=1&playlist=${encodeURIComponent(PLAYLIST_ID)}`);
+      let data = await r.json();
+
+      // 2) si la route renvoie un tableau (ou une erreur), on retente en "liste"
+      if (Array.isArray(data) || !data || !data.title) {
+        r = await fetch(`/api/spotify-daily?playlist=${encodeURIComponent(PLAYLIST_ID)}`);
+        const arr = await r.json();
+        data = Array.isArray(arr) ? pickFromArray(arr) : arr;
       }
+
+      if (data && data.title) {
+        box.innerHTML = `
+          <div style="display:flex;align-items:center;gap:12px">
+            ${data.cover ? `<img src="${data.cover}" alt="" style="width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid #ffffff20">` : `<div style="width:44px;height:44px;border-radius:8px;background:#1b1f2a"></div>`}
+            <div>
+              <div style="font-weight:600">${data.title}</div>
+              <div style="opacity:.8">${data.artist || ""}</div>
+              ${data.url ? `<div style="margin-top:4px"><a href="${data.url}" target="_blank" rel="noopener" style="color:#b6e0ff">écouter ↗</a></div>` : ``}
+            </div>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
+      }
+    } catch (e) {
+      console.error(e);
+      box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
     }
+  }
+
+  // ...garde tout ton code en-dessous...
+</script>
 
     /* ===== Constellation (archives locales) ===== */
     const ARCHIVE_KEY = 'eliabricot_constellation';
