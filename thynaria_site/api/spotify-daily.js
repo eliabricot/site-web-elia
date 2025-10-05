@@ -1,61 +1,66 @@
-// thynaria_site/api/spotifyDaily.js
+// ======== 🎧 Spotify Daily Song (CommonJS version for Vercel) ========
+// Fetch a random track from your playlist every day and return as JSON.
+
+const fetch = require("node-fetch");
+
+const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+
+// Replace with your playlist ID (from your playlist URL)
+const PLAYLIST_ID = "4QT911TLoITPYZX3Ja72SO"; // Eliabricot’s playlist 🎵
+
+async function getAccessToken() {
+  const auth = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString("base64");
+  const res = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${auth}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "grant_type=client_credentials",
+  });
+
+  if (!res.ok) throw new Error("Unable to get Spotify token");
+  const data = await res.json();
+  return data.access_token;
+}
+
+async function getPlaylistTracks(token) {
+  const res = await fetch(`https://api.spotify.com/v1/playlists/${PLAYLIST_ID}/tracks`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) throw new Error("Unable to load playlist");
+  const data = await res.json();
+  return data.items.map((item) => item.track);
+}
+
+function getDailyIndex(length) {
+  const today = new Date();
+  const dayOfYear = Math.floor(
+    (today - new Date(today.getFullYear(), 0, 0)) / 86400000
+  );
+  return dayOfYear % length;
+}
+
 module.exports = async (req, res) => {
   try {
-    const playlistId = (req.query && req.query.playlist) || "4QT911TLoITPYZX3Ja72SO";
-    const clientId = process.env.SPOTIFY_CLIENT_ID;
-    const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+    const token = await getAccessToken();
+    const tracks = await getPlaylistTracks(token);
 
-    if (!clientId || !clientSecret) {
-      return res.status(500).json({ error: "Missing SPOTIFY_CLIENT_ID/SECRET env vars" });
-    }
+    if (!tracks.length) throw new Error("No tracks in playlist");
 
-    // 1) Token (Client Credentials)
-    const tokenResp = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + Buffer.from(clientId + ":" + clientSecret).toString("base64"),
-      },
-      body: "grant_type=client_credentials",
+    const index = getDailyIndex(tracks.length);
+    const track = tracks[index];
+
+    res.status(200).json({
+      name: track.name,
+      artist: track.artists.map((a) => a.name).join(", "),
+      url: track.external_urls.spotify,
+      albumArt: track.album.images?.[0]?.url || null,
     });
-    const tokenJson = await tokenResp.json();
-    if (!tokenResp.ok || !tokenJson.access_token) {
-      return res.status(500).json({ error: "Spotify token error", details: tokenJson });
-    }
-
-    // 2) Playlist tracks (public)
-    const plResp = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=100&fields=items(track(name,artists(name),external_urls,album(images),preview_url)),next`,
-      { headers: { Authorization: `Bearer ${tokenJson.access_token}` } }
-    );
-    const plJson = await plResp.json();
-    if (!plResp.ok || !plJson.items) {
-      return res.status(500).json({ error: "Spotify playlist error", details: plJson });
-    }
-
-    const items = plJson.items
-      .map((it) => it.track)
-      .filter(Boolean)
-      .map((t) => ({
-        title: t.name,
-        artist: (t.artists || []).map((a) => a.name).join(", "),
-        url: t.external_urls?.spotify || "",
-        cover: t.album?.images?.[1]?.url || t.album?.images?.[0]?.url || "",
-        preview_url: t.preview_url || "",
-      }));
-
-    // Option: renvoyer directement "le morceau du jour"
-    if (req.query && (req.query.single === "1" || req.query.single === 1)) {
-      const today = Math.floor(Date.now() / 86400000);
-      const pick = items.length ? items[today % items.length] : null;
-      res.setHeader("Cache-Control", "s-maxage=900, stale-while-revalidate=3600");
-      return res.status(200).json(pick || {});
-    }
-
-    res.setHeader("Cache-Control", "s-maxage=900, stale-while-revalidate=3600");
-    return res.status(200).json(items);
-  } catch (e) {
-    console.error(e);
-    return res.status(200).json([]); // front gère le vide
+  } catch (err) {
+    console.error("Spotify API error:", err);
+    res.status(500).json({ error: "Impossible de charger la playlist..." });
   }
 };
