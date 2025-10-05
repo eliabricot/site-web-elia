@@ -24,7 +24,7 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html, body{height:100%}
 
-    /* ===== BACKGROUND (robuste iOS/Android) ===== */
+    /* ===== BACKGROUND ===== */
     body{
       font-family:"Philo", ui-sans-serif, system-ui;
       font-size:17px; line-height:1.6; color:var(--text);
@@ -36,7 +36,6 @@
       padding-right: env(safe-area-inset-right);
       padding-bottom: env(safe-area-inset-bottom);
     }
-
     body::before{
       content:"";
       position:fixed; inset:0; z-index:-1; pointer-events:none;
@@ -49,39 +48,21 @@
       will-change: transform;
       transform: translateZ(0);
     }
-
-    @media (max-width: 700px) and (orientation: portrait){
-      body::before{ background-position: center 25%, center 25%; }
-    }
+    @media (max-width:700px) and (orientation:portrait){ body::before{background-position:center 25%, center 25%} }
 
     .wrap{max-width:780px;margin:0 auto;padding:20px}
 
     /* ===== HEADER ===== */
     header{
-      min-height:100vh;
-      min-height:100dvh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
+      min-height:100dvh; display:flex; align-items:center; justify-content:center; text-align:center;
     }
-    @supports (-webkit-touch-callout: none){ header{ min-height:-webkit-fill-available; } }
+    @supports (-webkit-touch-callout:none){ header{min-height:-webkit-fill-available} }
 
     .hero h1{
-      font-size:54px;
-      margin-bottom:8px;
-      letter-spacing:1.5px;
-      text-shadow:
-        0 2px 8px rgba(0,0,0,0.45),
-        0 2px 12px rgba(0,0,0,0.6),
-        0 0 8px rgba(245,247,251,0.25);
+      font-size:54px; margin-bottom:8px; letter-spacing:1.5px;
+      text-shadow:0 2px 8px rgba(0,0,0,.45), 0 2px 12px rgba(0,0,0,.6), 0 0 8px rgba(245,247,251,.25);
     }
-
-    .hero p{
-      color:var(--muted);
-      font-size:17px;
-      text-shadow:0 2px 6px rgba(0,0,0,.25);
-    }
+    .hero p{ color:var(--muted); font-size:17px; text-shadow:0 2px 6px rgba(0,0,0,.25) }
 
     section{margin:40px 0}
     h2{font-size:22px;margin-bottom:12px}
@@ -101,36 +82,28 @@
       padding:12px 16px;border-radius:10px;
       text-decoration:none;color:var(--text);
       background:rgba(16,19,26,.72);
-      border:1px solid #ffffff1a;
-      transition:.2s;
+      border:1px solid #ffffff1a; transition:.2s;
       -webkit-tap-highlight-color: transparent;
     }
     .link:hover{background:#1a2b2b;border-color:#ffffff30}
     .link img.icon{width:22px;height:22px;object-fit:contain;display:inline-block}
 
     /* ===== UID Genshin ===== */
-    .uid-row{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:12px;margin:8px 0;padding:8px 12px;
-      border-radius:10px;background:rgba(16,19,26,.72);
-    }
+    .uid-row{ display:flex;align-items:center;justify-content:space-between; gap:12px;margin:8px 0;padding:8px 12px; border-radius:10px;background:rgba(16,19,26,.72) }
     .uid-label{display:flex;align-items:center;gap:8px}
     .uid-copy{
       margin-left:auto;padding:6px 12px;font-size:13px;font-family:inherit;
       color:#fff;background:#2e2e3a;border:none;border-radius:8px;cursor:pointer;
-      transition:transform .15s ease, background .2s ease;
-      box-shadow:0 2px 6px rgba(0,0,0,.3);
+      transition:transform .15s ease, background .2s ease; box-shadow:0 2px 6px rgba(0,0,0,.3);
       -webkit-tap-highlight-color: transparent;
     }
     .uid-copy:hover{background:#456d6d;transform:scale(1.04)}
 
-    /* ===== Toast copier ===== */
+    /* ===== Toast ===== */
     .toast{
       position:fixed;bottom:20px;right:20px;z-index:50;
       background:#2e2e3a;color:#fff;padding:10px 14px;border-radius:8px;
-      opacity:0;transform:translateY(10px);
-      transition:opacity .25s, transform .25s;
-      pointer-events:none;
+      opacity:0;transform:translateY(10px); transition:opacity .25s, transform .25s; pointer-events:none;
     }
     .toast.show{opacity:1;transform:translateY(0)}
 
@@ -150,41 +123,12 @@
     .np a{color:#b6e0ff;text-decoration:none}
     .np a:hover{text-decoration:underline}
 
-    /* ===== Twitch Status ===== */
-    .twitch-status {
-      text-align: center;
-      padding: 16px;
-      background: linear-gradient(145deg, #1a2028cc, #11151ccc);
-      border: 1px solid #ffffff15;
-      border-radius: var(--radius);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 8px #00000050 inset;
-      margin-top: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .twitch-status.live {
-      background: linear-gradient(145deg, rgba(135, 97, 255, 0.25), rgba(100, 75, 200, 0.3));
-      box-shadow: 0 0 12px rgba(140, 100, 255, 0.25), 0 0 25px rgba(180, 140, 255, 0.15) inset;
-      border: 1px solid rgba(200, 160, 255, 0.2);
-    }
-
-    .twitch-status h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .twitch-status a {
-      color: #c8a8ff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .twitch-status a:hover { text-decoration: underline; }
+    /* ===== Twitch ===== */
+    .twitch-status{ text-align:center;padding:16px;background:linear-gradient(145deg,#1a2028cc,#11151ccc);border:1px solid #ffffff15;border-radius:var(--radius);backdrop-filter:blur(6px);box-shadow:0 0 8px #00000050 inset;margin-top:1.5rem;transition:all .3s ease }
+    .twitch-status.live{ background:linear-gradient(145deg,rgba(135,97,255,.25),rgba(100,75,200,.3)); box-shadow:0 0 12px rgba(140,100,255,.25),0 0 25px rgba(180,140,255,.15) inset; border:1px solid rgba(200,160,255,.2) }
+    .twitch-status h2{ font-size:20px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px }
+    .twitch-status a{ color:#c8a8ff;text-decoration:none;font-weight:600 }
+    .twitch-status a:hover{ text-decoration:underline }
 
     /* ===== Responsive ===== */
     @media (max-width:600px){
@@ -228,13 +172,13 @@
       </div>
     </section>
 
-    <!-- Now Playing (Spotify) -->
+    <!-- Now Playing -->
     <section class="card nowplaying" id="now">
       <h2>🎧 Now Playing</h2>
       <div id="np-content"><p style="opacity:.7">rien en écoute pour le moment…</p></div>
     </section>
 
-    <!-- 🎵 Musique du jour (juste sous Now Playing) -->
+    <!-- Musique du jour -->
     <section class="card" id="day-song">
       <h2>🎵 Musique du jour</h2>
       <div id="day-song-box"><p style="opacity:.7">chargement…</p></div>
@@ -246,7 +190,7 @@
       <div id="twitch-box"><p style="opacity:.7">vérification du live…</p></div>
     </section>
 
-    <!-- ✦ Murmure du jour (QUOTE) — sous Twitch -->
+    <!-- Murmure du jour -->
     <section class="card" id="murmure">
       <h2>✦ Murmure du jour</h2>
       <div id="quote-box"><p style="opacity:.7">chargement…</p></div>
@@ -277,7 +221,7 @@
       </div>
     </section>
 
-    <!-- 🌌 Constellation (tout en bas) -->
+    <!-- Constellation -->
     <section class="card" id="constellation">
       <h2>🌌 Constellation</h2>
       <div style="position:relative;border:1px solid #ffffff15;border-radius:12px;overflow:hidden">
@@ -310,7 +254,7 @@
       });
     }
 
-    /* ===== Now Playing via Lanyard (Discord -> Spotify) ===== */
+    /* ===== Now Playing (Discord -> Spotify via Lanyard) ===== */
     const DISCORD_ID = "554436717260832770";
     async function updateNowPlaying(){
       try{
@@ -344,7 +288,7 @@
     setInterval(updateNowPlaying, 15000);
 
     /* ===== Twitch (via /api/twitch) ===== */
-    const TWITCH_USER = "eliabricot_"; // ton pseudo
+    const TWITCH_USER = "eliabricot_";
     async function updateTwitch(){
       try{
         const r = await fetch(`/api/twitch?user=${encodeURIComponent(TWITCH_USER)}`);
@@ -377,21 +321,18 @@
     updateTwitch();
     setInterval(updateTwitch, 60000);
 
-    /* ===== ✦ Murmure du jour (quotes courtes/safe) ===== */
+    /* ===== Murmure du jour ===== */
     const QUOTES = [
-      // OMORI
       { text:"My thoughts will follow you into your dreams.", source:"OMORI" },
       { text:"White Space is quiet, but it isn’t warm.", source:"OMORI" },
       { text:"Even shadows need a light to exist.", source:"OMORI" },
       { text:"It’s okay to rest. The world will wait.", source:"OMORI" },
       { text:"Some doors open only when you’re ready.", source:"OMORI" },
-      // Hollow Knight (paraphrases)
       { text:"In wilds beyond, your name is spoken in hush.", source:"Hollow Knight" },
       { text:"Born of Void, still you choose your path.", source:"Hollow Knight" },
       { text:"No cost too great—yet your will remains.", source:"Hollow Knight" },
       { text:"Hallownest remembers quiet footsteps in the dark.", source:"Hollow Knight" },
       { text:"Even the smallest nail can change a kingdom.", source:"Hollow Knight" },
-      // Anime vibes (général)
       { text:"Even a small light can cut through deep night.", source:"Anime" },
       { text:"Walk forward. Even slow is still forward.", source:"Anime" },
       { text:"Stars listen when you speak softly.", source:"Anime" },
@@ -406,41 +347,38 @@
       return q;
     }
 
-    /* ===== 🎵 Musique du jour depuis TA playlist Spotify =====
-       Front : appelle /api/spotify-daily?playlist=<id> et prend 1 titre déterministe par jour.
-    */
+    /* ===== Musique du jour (API /api/spotify-daily) ===== */
     const PLAYLIST_ID = "4QT911TLoITPYZX3Ja72SO";
     async function renderDaySong(){
       try{
-        const r = await fetch(`/api/spotify-daily?playlist=${encodeURIComponent(PLAYLIST_ID)}`);
-        const arr = await r.json(); // [{title,artist,url,cover,preview_url}]
-        const idx = dayOfYear(new Date()) % Math.max(arr.length,1);
-        const s = arr[idx] || null;
+        // renvoie 1 morceau/jour directement
+        const r = await fetch(`/api/spotify-daily?single=1&playlist=${encodeURIComponent(PLAYLIST_ID)}`);
+        const s = await r.json(); // {title,artist,url,cover,preview_url}
         const box = document.getElementById('day-song-box');
-        if (s){
+
+        if (s && s.title){
           box.innerHTML = `
             <div style="display:flex;align-items:center;gap:12px">
               ${s.cover ? `<img src="${s.cover}" alt="" style="width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid #ffffff20">` : `<div style="width:44px;height:44px;border-radius:8px;background:#1b1f2a"></div>`}
               <div>
                 <div style="font-weight:600">${s.title}</div>
-                <div style="opacity:.8">${s.artist}</div>
+                <div style="opacity:.8">${s.artist||""}</div>
                 ${s.url ? `<div style="margin-top:4px"><a href="${s.url}" target="_blank" rel="noopener" style="color:#b6e0ff">écouter ↗</a></div>` : ``}
               </div>
             </div>`;
           return s;
-        } else {
+        }else{
           box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
           return null;
         }
-      } catch(e){
+      }catch(e){
         console.error(e);
-        const box = document.getElementById('day-song-box');
-        box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
+        document.getElementById('day-song-box').innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
         return null;
       }
     }
 
-    /* ===== 🌌 Constellation (archives locales) ===== */
+    /* ===== Constellation (archives locales) ===== */
     const ARCHIVE_KEY = 'eliabricot_constellation';
     const loadArchive = () => { try{ return JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'{}'); } catch{ return {}; } };
     const saveArchive = (obj) => { try{ localStorage.setItem(ARCHIVE_KEY, JSON.stringify(obj)); } catch{} };
@@ -513,7 +451,7 @@
       drawConstellation();
     }
 
-    // GO
+    // Start
     initDaily();
   </script>
 </body>
