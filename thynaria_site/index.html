@@ -10,17 +10,10 @@
     @font-face{
       font-family: "Philo";
       src: url("assets/Philo.ttf?v=2") format("truetype");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
+      font-weight: 400; font-style: normal; font-display: swap;
     }
 
-    :root{
-      --text:#f5f7fb; --muted:#dde5e6;
-      --radius:12px; --shadow:0 8px 28px rgba(0,0,0,.35);
-      --card: rgba(20,22,27,.82);
-    }
-
+    :root{ --text:#f5f7fb; --muted:#dde5e6; --radius:12px; --shadow:0 8px 28px rgba(0,0,0,.35); --card: rgba(20,22,27,.82) }
     *{box-sizing:border-box;margin:0;padding:0}
     html, body{height:100%}
 
@@ -29,92 +22,51 @@
       font-family:"Philo", ui-sans-serif, system-ui;
       font-size:17px; line-height:1.6; color:var(--text);
       background-color:#0a0f12;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
       overflow-x:hidden;
-      padding-left: env(safe-area-inset-left); 
+      padding-left: env(safe-area-inset-left);
       padding-right: env(safe-area-inset-right);
       padding-bottom: env(safe-area-inset-bottom);
     }
     body::before{
-      content:"";
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
       background-image:
         linear-gradient(180deg, rgba(10,15,18,.45) 0%, rgba(10,15,18,.65) 100%),
         url("assets/cover.jpg?v=2");
-      background-size: cover, cover;
-      background-position: center, center;
-      background-repeat: no-repeat, no-repeat;
-      will-change: transform;
-      transform: translateZ(0);
+      background-size: cover, cover; background-position: center, center; background-repeat: no-repeat, no-repeat;
+      will-change: transform; transform: translateZ(0);
     }
     @media (max-width:700px) and (orientation:portrait){ body::before{background-position:center 25%, center 25%} }
 
     .wrap{max-width:780px;margin:0 auto;padding:20px}
 
     /* ===== HEADER ===== */
-    header{
-      min-height:100dvh; display:flex; align-items:center; justify-content:center; text-align:center;
-    }
+    header{ min-height:100dvh; display:flex; align-items:center; justify-content:center; text-align:center; }
     @supports (-webkit-touch-callout:none){ header{min-height:-webkit-fill-available} }
-
-    .hero h1{
-      font-size:54px; margin-bottom:8px; letter-spacing:1.5px;
-      text-shadow:0 2px 8px rgba(0,0,0,.45), 0 2px 12px rgba(0,0,0,.6), 0 0 8px rgba(245,247,251,.25);
-    }
+    .hero h1{ font-size:54px; margin-bottom:8px; letter-spacing:1.5px; text-shadow:0 2px 8px rgba(0,0,0,.45), 0 2px 12px rgba(0,0,0,.6), 0 0 8px rgba(245,247,251,.25) }
     .hero p{ color:var(--muted); font-size:17px; text-shadow:0 2px 6px rgba(0,0,0,.25) }
 
-    section{margin:40px 0}
-    h2{font-size:22px;margin-bottom:12px}
-
-    .card{
-      background:var(--card);
-      backdrop-filter: blur(4px);
-      border-radius:var(--radius);
-      padding:20px;
-      box-shadow:var(--shadow);
-    }
+    section{margin:40px 0} h2{font-size:22px;margin-bottom:12px}
+    .card{ background:var(--card); backdrop-filter: blur(4px); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow) }
 
     /* ===== Liens ===== */
     .links{display:grid;gap:12px}
-    .link{
-      display:flex;align-items:center;gap:12px;
-      padding:12px 16px;border-radius:10px;
-      text-decoration:none;color:var(--text);
-      background:rgba(16,19,26,.72);
-      border:1px solid #ffffff1a; transition:.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .link{ display:flex;align-items:center;gap:12px; padding:12px 16px;border-radius:10px; text-decoration:none;color:var(--text); background:rgba(16,19,26,.72); border:1px solid #ffffff1a; transition:.2s; -webkit-tap-highlight-color: transparent }
     .link:hover{background:#1a2b2b;border-color:#ffffff30}
     .link img.icon{width:22px;height:22px;object-fit:contain;display:inline-block}
 
     /* ===== UID Genshin ===== */
     .uid-row{ display:flex;align-items:center;justify-content:space-between; gap:12px;margin:8px 0;padding:8px 12px; border-radius:10px;background:rgba(16,19,26,.72) }
     .uid-label{display:flex;align-items:center;gap:8px}
-    .uid-copy{
-      margin-left:auto;padding:6px 12px;font-size:13px;font-family:inherit;
-      color:#fff;background:#2e2e3a;border:none;border-radius:8px;cursor:pointer;
-      transition:transform .15s ease, background .2s ease; box-shadow:0 2px 6px rgba(0,0,0,.3);
-      -webkit-tap-highlight-color: transparent;
-    }
+    .uid-copy{ margin-left:auto;padding:6px 12px;font-size:13px;font-family:inherit; color:#fff;background:#2e2e3a;border:none;border-radius:8px;cursor:pointer; transition:transform .15s, background .2s; box-shadow:0 2px 6px rgba(0,0,0,.3); -webkit-tap-highlight-color: transparent }
     .uid-copy:hover{background:#456d6d;transform:scale(1.04)}
 
     /* ===== Toast ===== */
-    .toast{
-      position:fixed;bottom:20px;right:20px;z-index:50;
-      background:#2e2e3a;color:#fff;padding:10px 14px;border-radius:8px;
-      opacity:0;transform:translateY(10px); transition:opacity .25s, transform .25s; pointer-events:none;
-    }
+    .toast{ position:fixed;bottom:20px;right:20px;z-index:50; background:#2e2e3a;color:#fff;padding:10px 14px;border-radius:8px; opacity:0;transform:translateY(10px); transition:opacity .25s, transform .25s; pointer-events:none }
     .toast.show{opacity:1;transform:translateY(0)}
 
     /* ===== Now Playing ===== */
-    .nowplaying{
-      text-align:center;padding:16px;
-      background:linear-gradient(145deg,#1a2028cc,#11151ccc);
-      border:1px solid #ffffff15;border-radius:var(--radius);
-      backdrop-filter:blur(6px);
-      box-shadow:0 0 8px #00000050 inset;
-    }
+    .nowplaying{ text-align:center;padding:16px; background:linear-gradient(145deg,#1a2028cc,#11151ccc); border:1px solid #ffffff15;border-radius:var(--radius); backdrop-filter:blur(6px); box-shadow:0 0 8px #00000050 inset }
     .np{display:flex;align-items:center;gap:12px;justify-content:center}
     .np img{width:44px;height:44px;border-radius:8px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,.35)}
     .np .t{display:flex;flex-direction:column;line-height:1.25}
@@ -130,12 +82,7 @@
     .twitch-status a{ color:#c8a8ff;text-decoration:none;font-weight:600 }
     .twitch-status a:hover{ text-decoration:underline }
 
-    /* ===== Responsive ===== */
-    @media (max-width:600px){
-      .hero h1{font-size:34px}
-      .hero p{font-size:15px}
-      .wrap{padding:14px}
-    }
+    @media (max-width:600px){ .hero h1{font-size:34px} .hero p{font-size:15px} .wrap{padding:14px} }
   </style>
 </head>
 <body>
@@ -238,240 +185,7 @@
   <!-- Toast -->
   <div id="toast" class="toast">UID copié !</div>
 
-  <script>
-    /* ===== Utils date ===== */
-    const pad = n => (n<10 ? '0'+n : ''+n);
-    const yyyymmdd = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-    function dayOfYear(date = new Date()){ const start = new Date(date.getFullYear(),0,0); return Math.floor((date-start)/(1000*60*60*24)); }
-
-    /* ===== Copier UID ===== */
-    function copyUID(uid){
-      navigator.clipboard.writeText(uid).then(()=>{
-        const t=document.getElementById('toast');
-        t.textContent='UID copié : '+uid;
-        t.classList.add('show');
-        setTimeout(()=>t.classList.remove('show'),1600);
-      });
-    }
-
-    /* ===== Now Playing (Discord -> Spotify via Lanyard) ===== */
-    const DISCORD_ID = "554436717260832770";
-    async function updateNowPlaying(){
-      try{
-        const r = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
-        const { data } = await r.json();
-        const box = document.getElementById('np-content');
-
-        if (data && data.listening_to_spotify && data.spotify){
-          const s = data.spotify;
-          const art = s.album_art_url;
-          const title = s.song;
-          const artist = s.artist;
-          const url = `https://open.spotify.com/track/${s.track_id}`;
-
-          box.innerHTML = `
-            <div class="np">
-              <img src="${art}" alt="">
-              <div class="t">
-                <div class="title">${title}</div>
-                <div class="artist">${artist}</div>
-                <a href="${url}" target="_blank" rel="noopener">ouvrir sur spotify ↗</a>
-              </div>
-            </div>
-          `;
-        } else {
-          box.innerHTML = `<p style="opacity:.7">rien en écoute pour le moment…</p>`;
-        }
-      }catch(e){ console.error(e); }
-    }
-    updateNowPlaying();
-    setInterval(updateNowPlaying, 15000);
-
-    /* ===== Twitch (via /api/twitch) ===== */
-    const TWITCH_USER = "eliabricot_";
-    async function updateTwitch(){
-      try{
-        const r = await fetch(`/api/twitch?user=${encodeURIComponent(TWITCH_USER)}`);
-        const data = await r.json();
-        const box = document.getElementById('twitch-box');
-        const container = document.getElementById('tw');
-
-        if (data.live){
-          const thumb = (data.thumbnail_url || "").replace("{width}","320").replace("{height}","180");
-          container.classList.add('live');
-          box.innerHTML = `
-            <a class="tw-link" href="${data.url}" target="_blank" rel="noopener" style="display:flex; gap:12px; align-items:center; text-decoration:none;">
-              <img class="tw-thumb" src="${thumb}" alt="aperçu du live" style="width:120px;height:68px;border-radius:10px;object-fit:cover;border:1px solid #ffffff20">
-              <div class="tw-info">
-                <div class="tw-title">🎥 ${data.title}</div>
-                <div class="tw-sub" style="opacity:.75">en direct sur Twitch</div>
-              </div>
-            </a>
-          `;
-        } else {
-          container.classList.remove('live');
-          box.innerHTML = `<p style="opacity:.78">☁️ pas de stream pour l’instant… un peu de calme et de musique entre les étoiles ✧</p>`;
-        }
-      }catch(e){
-        console.error(e);
-        document.getElementById('twitch-box').innerHTML =
-          `<p style="opacity:.7">impossible de vérifier le live pour le moment…</p>`;
-      }
-    }
-    updateTwitch();
-    setInterval(updateTwitch, 60000);
-
-    /* ===== Murmure du jour ===== */
-    const QUOTES = [
-      { text:"My thoughts will follow you into your dreams.", source:"OMORI" },
-      { text:"White Space is quiet, but it isn’t warm.", source:"OMORI" },
-      { text:"Even shadows need a light to exist.", source:"OMORI" },
-      { text:"It’s okay to rest. The world will wait.", source:"OMORI" },
-      { text:"Some doors open only when you’re ready.", source:"OMORI" },
-      { text:"In wilds beyond, your name is spoken in hush.", source:"Hollow Knight" },
-      { text:"Born of Void, still you choose your path.", source:"Hollow Knight" },
-      { text:"No cost too great—yet your will remains.", source:"Hollow Knight" },
-      { text:"Hallownest remembers quiet footsteps in the dark.", source:"Hollow Knight" },
-      { text:"Even the smallest nail can change a kingdom.", source:"Hollow Knight" },
-      { text:"Even a small light can cut through deep night.", source:"Anime" },
-      { text:"Walk forward. Even slow is still forward.", source:"Anime" },
-      { text:"Stars listen when you speak softly.", source:"Anime" },
-      { text:"Someday, our paths will cross under the same sky.", source:"Anime" },
-      { text:"The wind carries names we forgot to say.", source:"Anime" },
-    ];
-    function renderDailyQuote(){
-      const i = dayOfYear(new Date()) % QUOTES.length;
-      const q = QUOTES[i];
-      const box = document.getElementById('quote-box');
-      if (box) box.innerHTML = `<blockquote style="margin:6px 0 0;font-size:18px;line-height:1.5">“${q.text}”<br><span style="opacity:.7;font-size:14px">— ${q.source}</span></blockquote>`;
-      return q;
-    }
-
-    /* ===== Musique du jour (API /api/spotify-daily) ===== */
-    const PLAYLIST_ID = "4QT911TLoITPYZX3Ja72SO";
-    <script>
-  // ...garde tout ton code au-dessus...
-
-  const PLAYLIST_ID = "4QT911TLoITPYZX3Ja72SO";
-
-  async function renderDaySong(){
-    const box = document.getElementById('day-song-box');
-    box.innerHTML = `<p style="opacity:.7">chargement…</p>`;
-    const pickFromArray = (arr) => {
-      const idx = dayOfYear(new Date()) % Math.max(arr.length, 1);
-      return arr[idx] || null;
-    };
-
-    try {
-      // 1) on tente la route "single"
-      let r = await fetch(`/api/spotify-daily?single=1&playlist=${encodeURIComponent(PLAYLIST_ID)}`);
-      let data = await r.json();
-
-      // 2) si la route renvoie un tableau (ou une erreur), on retente en "liste"
-      if (Array.isArray(data) || !data || !data.title) {
-        r = await fetch(`/api/spotify-daily?playlist=${encodeURIComponent(PLAYLIST_ID)}`);
-        const arr = await r.json();
-        data = Array.isArray(arr) ? pickFromArray(arr) : arr;
-      }
-
-      if (data && data.title) {
-        box.innerHTML = `
-          <div style="display:flex;align-items:center;gap:12px">
-            ${data.cover ? `<img src="${data.cover}" alt="" style="width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid #ffffff20">` : `<div style="width:44px;height:44px;border-radius:8px;background:#1b1f2a"></div>`}
-            <div>
-              <div style="font-weight:600">${data.title}</div>
-              <div style="opacity:.8">${data.artist || ""}</div>
-              ${data.url ? `<div style="margin-top:4px"><a href="${data.url}" target="_blank" rel="noopener" style="color:#b6e0ff">écouter ↗</a></div>` : ``}
-            </div>
-          </div>
-        `;
-      } else {
-        box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
-      }
-    } catch (e) {
-      console.error(e);
-      box.innerHTML = `<p style="opacity:.7">impossible de charger la playlist…</p>`;
-    }
-  }
-
-  // ...garde tout ton code en-dessous...
-</script>
-
-    /* ===== Constellation (archives locales) ===== */
-    const ARCHIVE_KEY = 'eliabricot_constellation';
-    const loadArchive = () => { try{ return JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'{}'); } catch{ return {}; } };
-    const saveArchive = (obj) => { try{ localStorage.setItem(ARCHIVE_KEY, JSON.stringify(obj)); } catch{} };
-
-    function drawConstellation(){
-      const canvas = document.getElementById('sky');
-      const tip = document.getElementById('tip');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const DPR = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * DPR; canvas.height = rect.height * DPR;
-
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = "rgba(255,255,255,.9)";
-
-      const today = yyyymmdd(new Date());
-      const entries = Object.entries(loadArchive())
-        .filter(([d]) => d < today)
-        .sort((a,b)=> a[0]<b[0] ? -1 : 1)
-        .map(([date, v]) => ({ date, ...v }));
-
-      const points = entries.map(e=>{
-        const seed = parseInt(e.date.replace(/-/g,''),10);
-        const rnd = n => {
-          let t = seed + n + 0x6d2b79f5;
-          t = Math.imul(t ^ (t >>> 15), t | 1);
-          t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-        };
-        const x = rnd(0) * canvas.width, y = rnd(1) * canvas.height, r = 1 + rnd(2)*2.5;
-        return {x,y,r,entry:e};
-      });
-
-      points.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill(); });
-
-      canvas.onmousemove = (e)=>{
-        const r = canvas.getBoundingClientRect();
-        const mx = (e.clientX - r.left) * DPR, my = (e.clientY - r.top) * DPR;
-        let hit = null;
-        for(const p of points){ const dx=mx-p.x, dy=my-p.y; if (Math.hypot(dx,dy) < p.r+6) { hit=p; break; } }
-        if(hit){
-          tip.style.display='block';
-          tip.style.left = (e.clientX - r.left + 12)+'px';
-          tip.style.top  = (e.clientY - r.top + 12)+'px';
-          const q = hit.entry.quote, s = hit.entry.song;
-          tip.innerHTML = `
-            <div style="opacity:.7;font-size:12px">${hit.entry.date}</div>
-            <div style="margin-top:4px">“${q?.text||''}”</div>
-            <div style="opacity:.7;font-size:12px">— ${q?.source||''}</div>
-            ${s ? `<div style="margin-top:6px"><b>${s.title}</b><div style="opacity:.7;font-size:12px">${s.artist||''}</div></div>`:''}
-          `;
-        } else tip.style.display='none';
-      };
-      canvas.onmouseleave = ()=>{ tip.style.display='none'; };
-    }
-
-    /* ===== Init quotidien ===== */
-    async function initDaily(){
-      const today = yyyymmdd(new Date());
-      const archive = loadArchive();
-
-      const quote = renderDailyQuote();
-      const song  = await renderDaySong();
-
-      if(!archive[today]){
-        archive[today] = { quote, song };
-        saveArchive(archive);
-      }
-      drawConstellation();
-    }
-
-    // Start
-    initDaily();
-  </script>
+  <!-- UN SEUL script, chargé à la fin -->
+  <script src="script.js"></script>
 </body>
 </html>
